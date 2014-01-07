@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<!--
+This page by Claire Chan SCS '15 
+CMU ASA 2012
+cchan@cmu.edu
+Last Updated 6/19/12
+-->
+
+<html>
+<title>CMU Asian Students Association</title>
+<head>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.6.2.min.js"></script>
+
+<!--fonts-->
+<link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Annie+Use+Your+Telescope' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Handlee' rel='stylesheet' type='text/css'>
+
+<!--fbAlbum.js-->
+<script src="jquery.fbAlbum.js"></script>
+<script src="fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+<script src="fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+
+<!--turn.js-->
+<script src="turn.js"></script>
+
+<!--jqeury.exposure.js-->
+<link href="exposure/boardcss.css?v=1.0" type="text/css" rel="stylesheet" />
+<script src="exposure/jquery.exposure.js?v=1.0" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+//redirect script
+var browser = navigator.appName
+var ver = navigator.appVersion
+var thestart = parseFloat(ver.indexOf("MSIE"))+1
+var brow_ver = parseFloat(ver.substring(thestart+4,thestart+7))
+if (browser=="Microsoft Internet Explorer")
+{
+window.location="redirect.html";
+}
+
+$(document).ready(function(){
+		$(window).bind('resize', function() {
+			location.reload();
+		});
+
+		$('#book').turn({gradients: true, acceleration: true});
+		$("#booth2012").hide();
+	
+		$("a#single_image").fancybox();
+		$("a.grouped_elements").fancybox();
+		
+		//page navigation
+		$("#home").click(function(){
+			$('#book').turn('page', 1);
+		});
+		$("#home").mouseover(function(){
+			$(this).css("background-color","#ccc");
+		});
+		$("#home").mouseout(function(){
+			$(this).css("background-color","#FFFF66 ");
+		});
+		
+		$("#about").click(function(){
+			$('#book').turn('page', 2);
+		});
+		$("#about").mouseover(function(){
+			$(this).css("background-color","#ccc");
+		});
+		$("#about").mouseout(function(){
+			$(this).css("background-color","#FFCC33 ");
+		});
+		
+		$("#board").click(function(){
+			$('#book').turn('page', 4);
+		});
+		$("#board").mouseover(function(){
+			$(this).css("background-color","#ccc");
+		});
+		$("#board").mouseout(function(){
+			$(this).css("background-color","#FF99FF  ");
+		});
+
+		$("#photos").click(function(){
+			$('#book').turn('page', 6);
+		});
+		
+		$("#photos").mouseover(function(){
+			$(this).css("background-color","#ccc");
+		});
+		$("#photos").mouseout(function(){
+			$(this).css("background-color","#66FF66");
+		});
+		
+		$("#newsletters").click(function(){
+			$('#book').turn('page', 8);
+		});
+		
+		$("#newsletters").mouseover(function(){
+			$(this).css("background-color","#ccc");
+		});
+		$("#newsletters").mouseout(function(){
+			$(this).css("background-color","#66CCFF");
+		});
+		
+		$("#history").click(function(){
+			$('#book').turn('page', 10);
+		});
+		
+		$("#history").mouseover(function(){
+			$(this).css("background-color","#ccc");
+		});
+		
+		$("#history").mouseout(function(){
+			$(this).css("background-color","#6699FF");
+		});
+		
+		$("#contact").click(function(){
+			$('#book').turn('page', 12);
+		});
+		
+		$("#contact").mouseover(function(){
+			$(this).css("background-color","#ccc");
+		});
+		
+		$("#contact").mouseout(function(){
+			$(this).css("background-color","#CC66FF");
+		});
+		
+		//about page
+		$("#contactpage").click(function(){
+			$('#book').turn('page', 12);
+		});
+		
+		//photos page
+		$("#booth2012cover").click(function(){
+			$("#booth2012").show();
+		});
+		
+		//exposure script
+				var gallery = $('#images');
+				gallery.exposure({controlsTarget : '#controls',
+					controls : { prevNext : true, pageNumbers : true, firstLast : false },
+					visiblePages : 2,
+					slideshowControlsTarget : '#slideshow',
+					onThumb : function(thumb) {
+						var li = thumb.parents('li');				
+						var fadeTo = li.hasClass($.exposure.activeThumbClass) ? 1 : 0.3;
+						
+						thumb.css({display : 'none', opacity : fadeTo}).stop().fadeIn(200);
+						
+						thumb.hover(function() { 
+							thumb.fadeTo('fast',1); 
+						}, function() { 
+							li.not('.' + $.exposure.activeThumbClass).children('img').fadeTo('fast', 0.3); 
+						});
+					},
+					onImage : function(image, imageData, thumb) {
+						// Fade out the previous image.
+						image.siblings('.' + $.exposure.lastImageClass).stop().fadeOut(500, function() {
+							$(this).remove();
+						});
+						
+						// Fade in the current image.
+						image.hide().stop().fadeIn(1000);
+
+						// Fade in selected thumbnail (and fade out others).
+						if (gallery.showThumbs && thumb && thumb.length) {
+							thumb.parents('li').siblings().children('img.' + $.exposure.selectedImageClass).stop().fadeTo(200, 0.3, function() { $(this).removeClass($.exposure.selectedImageClass); });			
+							thumb.fadeTo('fast', 1).addClass($.exposure.selectedImageClass);
+						}
+					},
+					onPageChanged : function() {
+						// Fade in thumbnails on current page.
+						gallery.find('li.' + $.exposure.currentThumbClass).hide().stop().fadeIn('fast');
+					}
+				});
+		
+		$('#booth2012').fbAlbum({
+				'albumID':'360801800651812',
+				'callback':	function(){	//code that loads after the album must go here
+					$(".album a").fancybox(); 
+				}
+			});
+			
+});
+
+</script>
+
+<style type="text/css">
+
+body{
+	overflow:hidden;
+	background-image:url('images/layout/woodbg.png');
+	background-size:100%;
+	background-repeat: no-repeat;
+	font-family: 'Coming Soon', cursive;
+	font-size:110%;
+}
+
+p{
+	font-size:110%;
+	font-family:'Handlee', cursive;
+}
+
+a:link {color:#6699FF; text-decoration:none}   
+a:visited {color:#666;}
+a:hover {color:#CC0000;}
+a img {border: none;}
+
+h2,h3{
+	color:#CC0000;
+}
+
+#navbar{
+	position:absolute;
+	width:50%;
+	height:95%;
+	float:left;
+	background-repeat:no-repeat;
+	background-image:url(images/layout/linedpaper.png);
+	background-size:100% 100%;
+	font-size:100%;
+	color:black;
+	}
+
+#home{	cursor: pointer; position:relative; margin-top:15%; margin-left:4%; width:13%; height:7%; text-align:center; background-color:#FFFF66;}
+#about{	cursor: pointer; position:relative; margin-top:2%; margin-left:4%; width:13%; height:7%; text-align:center; background-color:#FFCC33;}
+#board{	cursor: pointer; position:relative; margin-top:2%; margin-left:4%; width:13%; height:7%; text-align:center; background-color:#FF99FF;}
+#photos{ cursor: pointer; position:relative; margin-top:2%; margin-left:4%; width:13%; height:7%; text-align:center; background-color:#66FF66;}
+#newsletters{ cursor: pointer; position:relative; margin-top:2%; margin-left:4%; width:13%; height:7%; text-align:center; background-color:#66CCFF;}
+#history{ cursor: pointer; position:relative; margin-top:2%; margin-left:4%; width:13%; height:7%; text-align:center; background-color:#6699FF;}
+#contact{ cursor: pointer; position:relative; margin-top:2%; margin-left:4%; width:13%; height:7%; text-align:center; background-color:#CC66FF;}
+
+#newsfeed{
+	position:absolute;
+	width:39%;
+	margin-top:4%;
+	margin-left:10%;
+	font-family: 'Handlee', cursive;
+	font-size:90%;
+}
+	
+#footer{
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:20px;
+   font-size:11px;
+   color:white;
+}
+
+#book{
+	position:absolute;
+    float:right;
+	width:90%;
+    height:90%;
+	margin-right:1%;
+	margin-top:1%;
+}
+
+#book .turn-page{
+    background-image:url(images/layout/bookcover.png);
+	background-size:100% 100%;
+}
+
+#covertext{
+	margin-top:30%;
+	margin-bottom:5%;
+	font-size:50px;
+	color:white;
+}
+
+img.coverback{
+	width:100%;
+	height:100%;
+}
+
+#pageleft{
+	width:100%;
+	height:94%;
+	margin-top:3%;
+	margin-left:5%;
+	margin-bottom:3%;
+	background-image:url(images/layout/paperleft.jpg);
+}
+
+#pageright{
+	width:100%;
+	height:94%;
+	margin-top:3%;
+	margin-bottom:3%;
+	background-image:url(images/layout/paperright.jpg);
+}
+
+#fullpage{
+	width:100%;
+	height:100%;
+	position:absolute;
+	margin-left:5%;
+	margin-right:0%;
+	line-height: 575px;
+	border:0px solid gray;
+}
+
+img.fullpage{
+	vertical-align:middle;
+	width:100%;
+}
+
+#content{
+	position:absolute;
+	height:90%;
+	margin-top:10%;
+	margin-left:10%;
+	margin-right:5%;
+	margin-bottom:5%;
+	font-size:14px;
+	color:;
+	z-index:0;
+}
+
+img.board1{
+	position:absolute;
+	margin-top:-7%;
+	margin-left:-5%;
+	z-index:-2;
+	width:55%;
+}
+
+img.board2{
+	position:absolute;
+	margin-top:0%;
+	margin-left:35%;
+	z-index:-1;
+	width:70%;
+}
+
+p.abouttext{
+	font-size:100%;
+	font-family:'Handlee', cursive;
+}
+
+#wrapper{
+    width:100%;
+    height:100%;
+	border:0px solid gray;
+	overflow:hidden;
+}
+
+#booth2012{
+	margin-left:-5%;
+	border:none;
+	overflow:auto;
+	width:109%;
+}
+
+#albumlist{
+	width:105%;
+	height:100%;
+	background-color:;
+	overflow:auto;
+}
+
+#albumlistwrapper{
+	width:100%;
+    height:60%;
+	border:0px solid gray;
+	overflow:hidden;
+}
+
+#history_albumlist{
+	width:105%;
+	height:100%;
+	background-color:;
+	overflow:auto;
+}
+
+#history_albumlistwrapper{
+	width:100%;
+    height:90%;
+	border:0px solid gray;
+	overflow:hidden;
+}
+
+img.albumthumb{
+	width:150px;
+}
+
+#album{
+	width:150px;
+	float:left;
+	padding:5px;
+}
+
+.album{ list-style:none; max-height:400px; overflow:auto;}
+.album li{ float:left; height:100%; text-align:center; border-style:none}
+.album a{ display:block; width:150px; padding:5px; border:1px solid; border-color:transparent}
+.album a:hover{ background-color:rgba(255,255,255,0.5); border:1px solid #FFF; border-radius:15px;}
+
+</style>
+</head>
+
+<body>
+<!--reloads page on browser resize-->
+<body onResize="window.location=window.location;"> 
+
+<div id='navbar'>
+	<div id="home">Home</div>
+	<div id="about">About</div>
+	<div id="board">Board</div>
+	<div id="photos">Photos</div>
+	<div id="newsletters">News</div>
+	<div id="history">History</div>
+	<div id="contact">Contact</div>
+</div>
+
+<div id="newsfeed">
+	<font face='Coming Soon'><h1>CMU Asian Students Association</h1></font>
+	<p>Welcome to our site! Click on the tabs to the left, or use the corner of the book to get started! </p>
+	<hr />
+	Updates:
+	<p>
+	<i>6/19/12</i><br>
+	New site is up!
+	</p>
+	
+	<p>
+	<i>4/21/12</i><br>
+	We did it, 1st place booth! Thank you to everyone who came out and helped! 
+	We'll be selling our paintings and baby looney tunes online soon, so be sure to check it out!
+	</p>
+</div>
+
+<div id='book'>
+    <div id = "page 1">
+		<div id = "covertext">
+		<center>ASA</center>
+		</div>
+	</div>
+	
+	<div id = "page 2">
+		
+		<div id = "fullpage">
+			<a id="single_image" title="ASA Booth 2012" href="images/layout/booth.jpg"><img class="fullpage" src="images/layout/booth.jpg" alt=""/></a>
+		</div>
+		<div id = "pageleft">
+		</div>
+	</div>
+	
+	<div id = "page 3">
+		<div id = "content">
+			<h2>What Makes ASA Lovin'?</h2>
+			<p class = "abouttext">The Carnegie Mellon University's Asian Students Association, also known as ASA, is the largest student organization on campus. Comprised of students interested in exploring Asian culture and participating in different events throughout the school year, our organization is a fun way to get involved and meet new people. We welcome anyone who is interested in being a part of our family, so feel free to come out!
+			</p>
+			<p class = "abouttext">Throughout the year we are looking for PR members who will attend meetings and get involved in fundraisers and events. To join, just come to our PR meetings every Wednesday at 5:30 in the West Wing TV Lounge and sign up to be on our PR list. We will send you updates about our events so you can meet other ASA members at our social activities! Come early so we can pair you up with a mentor who will tell you more about ASA!
+			</p>
+			<p class = "abouttext">Second semester we build a booth for the Spring Carnival, and it's one of our biggest activities of the year. All the PRs, board members, and even alumni will come out and help build an amazing booth, which will hopefully win first place! Through the times we spend together buidling our booth, ASA members develop close friendships that last a lifetime.
+			</p>
+			<p class = "abouttext"><b>Join Us!</b> Come to PR Meetings and be a PR member. We'll add you to our d-list, just leave us your email<a id="contactpage" href="#"> here!</a>
+			</p>
+		</div>
+		<div id = "pageright">
+		</div>
+	</div>
+	
+	<div id = "page 4">
+		<div id = "content">
+			<h2>2012 ASA Board</h2>
+			<p>Meet our board! Our boards serve by calendar year, so we hold elections and interviews every December/January. Talk to one of us if you're interested in a board position!
+			</p>	
+			<a class="grouped_elements" rel="boardphotos" title="CMU's Got Talent" href="images/layout/board1.jpg"><img class="board1" src="images/layout/board1.png" alt=""/></a>
+			<a class="grouped_elements" rel="boardphotos" title="ASA Booth 2012" href="images/layout/board2.jpg"><img class="board2" src="images/layout/board2.png" alt=""/></a>
+		</div>
+		<div id = "pageleft">
+		</div>
+	</div>
+	
+	<div id = "page 5">
+		<div id="exposuremain">
+			<div class="panel">
+				<ul id="images">
+					<li><a href="images/board/board_christina.png"><img src="images/board/thumbs/thumb_christina.jpg" title="<b>Christina Yoon - President</b><font size='2'> <br> Hey, I'm your ASA President. I'm a junior from Los Angeles majoring in MSE & BME. I love meeting new people so feel free to talk and get to know me better. ASA is filled with fun-loving people and lifelong friendships! Hope you join us this semester :)"/></a></li>
+					<li><a href="images/board/board_jeff.png"><img src="images/board/thumbs/thumb_jeff.jpg" title="<b>Jeff Lau - Vice President</b><font size='2'> <br>Hey! I'm the ASA vice president. People call me Momma Lau but you can call me Jeff. If you're looking to get more involved with ASA this year, we should grab food and I'll tell you all about how you can help! </font>" /></a></li>
+					<li><a href="images/board/board_deanna.png"><img src="images/board/thumbs/thumb_deanna.jpg" title="<b>Deanna Zhu - Secretary</b><font size='1'> <br>Hii~ I’m your ASA Secretary! I’m a junior majoring in ECE and I pretty like everything and everyone. My life motto is pC and Happiness. ASA is not just a club but my family. I love seeing fresh, new faces join us so don’t hesitate to come out! I’ll probably try to get food with you sometime so don’t feel creeped out!</font>" /></a></li>
+					<li><a href="images/board/board_justina.png"><img src="images/board/thumbs/thumb_justina.jpg" title="<b>Justina Eng - Treasurer</b><font size='2'><br>Hey everyone! My name is Justina Eng, and I am currently a junior majoring in fine arts. Currently, I am the treasurer for ASA. I hope that I can meet each and everyone of you this year, whether it be during booth or in the fall! :)</font>" /></a></li>
+					<li><a href="images/board/board_brian.png"><img src="images/board/thumbs/thumb_brian.jpg" title="<b>Brian Kim - Public Relations Head</b><font size='1'><br>Hey there beautiful people! Brian Kim, PR Head at your service. You can call me Dong if you want. Freshman, Chem E and BME double major and music minor. Why did I choose to be PR Head? So I can bring y’all good lookin’ people out to PR meetings! Experience the magic of ASA. Come out to PR meetings so we PR Heads don’t feel so lonely in an empty room!</font>" /></a></li>
+					<li><a href="images/board/board_clara.png"><img src="images/board/thumbs/thumb_clara.jpg" title="<b>Clara Lee - Public Relations Head</b> <font size='2'> <br>Hi ASA! I’m one of your new PR Heads! I’m an architecture major and I enjoy having tangerines for breakfast. I like to run so if you’re ever in the mood to relieve some stress or work out, we can run together!!!!</font>" /></a></li>
+					<li><a href="images/board/board_yang.png"><img src="images/board/thumbs/thumb_yang.jpg" title="<b>Yang You - Culture Chair</b><font size='1'> <br>Hey there (: I’m your ASA culture chair! I’m a sophomore from Maryland, planning to major in civil & environmental engineering, and I love ASA for all the awesome people and the friendships that come out it. Come to our PR meetings and events to see what we’re all about, can’t wait to meet everyone!!</font>" /></a></li>
+					<li><a href="images/board/board_jeremy.png"><img src="images/board/thumbs/thumb_jeremy.jpg" title="<b>Jeremy Lu - Design Chair</b><font size='2'> <br> Hey everyone :). I’m one of the two design chairs for ASA. I’m a sophomore majoring in Architecture, and I’ll be designing those flyers and posters for our up and coming dances! Come out to our events and don’t be afraid to chat!</font>" /></a></li>
+					<li><a href="images/board/board_sunny.png"><img src="images/board/thumbs/thumb_sunny.jpg" title="<b>Sunny Li - Design Chair</b><font size='2'><br>Hello. I am one of your design chairs. I’m a Design major. I like to draw. I am often called Sunshine or Sunny Bunny. My obsession is Sue Park. Please get to know me. But be aware, I am awkward.</font>" /></a></li>
+					<li><a href="images/board/board_henry.png"><img src="images/board/thumbs/thumb_henry.jpg" title="<b>Henry Neale - Intramural Sports Chair</b><font size='2'> <br>Hey everybody! I’m Henry, your ASA IM Chair. My favorite activities include volleyball, soccer, skiing, eating, gaming, and meeting new people. Come out to our events and don’t be shy! Hope to see you soon :D.</font>" /></a></li>
+					<li><a href="images/board/board_sue.png"><img src="images/board/thumbs/thumb_sue.jpg" title="<b>Sue Park - Newsletter Chair</b><font size='2'><br>Hello! I’m one of your newsletter chairs and I will be delivering your ASA news every month with the other newsletter chair. I love to talk and meet new people so if you’re ever in need of a lunch buddy or want to go out for some coffee, don’t be afraid to ask!</font>" /></a></li>
+					<li><a href="images/board/board_chanamon.png"><img src="images/board/thumbs/thumb_chanamon.jpg" title="<b>Chanamon Ratanalert - Newsletter Chair</b><font size='1'> <br>Hi! I’m the other newsletter chair. My name is pronounced like “Hannah Montana” minus the “-tana” and adding a “Ch-“ to the front. Get it? Got it? Good. Now don’t actually call me that please. I’m a sophomore IS Major. I love being a part of ASA and would love for all of you to join our family! If you come to know me well enough, you’ll find out that I pinch cheeks and touch heads a lot, so don’t freak out. Oh, and I love cows. Moo.</font>" /></a></li>
+					<li><a href="images/board/board_reyna.png"><img src="images/board/thumbs/thumb_reyna.jpg" title="<b>Reyna Pacis - Service Chair</b><font size='2'> <br>Hi! c: I’m your ASA service chair and I’m studying chemistry and/or MSE and I’m from the side of New Jersey that no one lives in. I enjoy coffee, lame jokes, and long walks on the beach. And of course, I’m really looking forward to the upcoming year for ASA :D It’s going to be fantastic~</font>" /></a></li>
+					<li><a href="images/board/board_claire.png"><img src="images/board/thumbs/thumb_claire.jpg" title="<b>Claire Chan - Webmaster</b><font size='2'> <br>Hi! I’m Claire, your webmaster! I’m a sophomore CS major from Middleton, MA. I love sleep and good food. If you ever need someone to snack with at 3am, chances are I'll be awake :p Come out to ASA this semester! I promise you’ll meet some really awesome people!</font>" /></a></li>
+					<li><a href="images/board/board_alex.png"><img src="images/board/thumbs/thumb_alex.jpg" title="<b>Alex Huseman - Financial Council</b><br>Hi. My name is Alex, but some people call me Huseman. I'm a second-year Architecture major and I like King Cake.</font>" /></a></li>	
+					<li><a href="images/board/board_sam.png"><img src="images/board/thumbs/thumb_sam.jpg" title="<b>Sam Cheang - Financial Council</b><br>Hi my name is Sam and I am currently a sophomore in CIT. I lived in California when I was a kid and moved to Taiwan when I was 7. I'm super boring and my hobbies include playing computer games, listening to music, shopping and sleeping.</font>" /></a></li>
+					<li><a href="images/board/board_soy.png"><img src="images/board/thumbs/thumb_soy.jpg" title="<b>Soyeon Park - Financial Council</b><font size='1'><br>Hey Guys! My name is Soyeon Park. I usually go by Soy but feel free to call me soybean, soy sauce, soy milk etc... I am a sophomore Fine Arts major and I'm from Long Island, New York, but I also spent 7 years of my childhood in AUSTRALIA. I love to meet new people...and bake. So feel free to come out to CAKE POP MAKING on Thursday nights. Hope to see everyone around!!!</font>" /></a></li>
+				</ul>
+				<div id="controls"></div>
+				<div class="clear"></div>
+			</div>
+			<div id="exposure"></div>			
+			<div class="clear"></div>
+				
+		</div>	
+		
+		<div id = "pageright">
+		</div>
+	</div>
+	
+	<div id = "page 6">
+		<div id = "content">
+			<h2>Photos</h2>
+			<p>Select an album</p>
+				<div id = "albumlistwrapper">
+					<div id = "albumlist">
+						<div id = "album" style="cursor: pointer">
+							<img id="booth2012cover" class="albumthumb" src="https://graph.facebook.com/360801800651812/picture"></img>
+							<br><center>Booth 2012</center>
+						</div>
+		
+					</div>
+				</div>
+			<p>You can upload photos to our albums through <a href="https://www.facebook.com/pages/ASA-Pics/355531374512188"> facebook!</a></p>
+		</div>
+		<div id = "pageleft">
+		</div>
+	</div>
+
+    <div id = "page 7">
+		<div id = "content">
+			<div id = "wrapper">
+				<div id="booth2012"></div>
+			</div>
+		</div>
+		<div id = "pageright">
+		</div>
+	</div>
+	
+	<div id = "page 8">
+		<div id = "content">
+			<h2>Newsletters</h2>
+			<p>Select a newsletter to view</p>
+			<b>2012</b>
+			<ul>
+				<li><a href="newsletters/ASA_FEBRUARY_2012_NEWSLETTER.pdf" target="_blank">February</a></li>
+				<li><a href="newsletters/ASA_MARCH_2012_NEWSLETTER.pdf" target="_blank">March</a></li>
+			</ul>
+		</div>
+		<div id = "pageleft">
+		</div>
+	</div>
+	
+	<div id = "page 9">
+		<div id = "content">
+			<h3>Archive</h3>
+			<b>2011</b>
+			<ul>
+				<li><a href="newsletters/ASA_AUGUST_2011_NEWSLETTER.pdf" target="_blank">August</a></li>
+				<li><a href="newsletters/ASA_APRIL_2011_NEWSLETTER.pdf" target="_blank">April</a></li>
+				<li><a href="newsletters/ASA_JANUARY_2011_NEWSLETTER.pdf" target="_blank">January</a></li>
+			</ul>
+			<b>2010</b>
+			<ul>
+				<li><a href="newsletters/ASA_NOVEMBER_2010_NEWSLETTER.pdf" target="_blank">November</a></li>
+				<li><a href="newsletters/ASA_OCTOBER_2010_NEWSLETTER.pdf" target="_blank">October</a></li>
+				<li><a href="newsletters/ASA_SEPTEMBER_2010_NEWSLETTER.pdf" target="_blank">September</a></li>
+				<li><a href="newsletters/ASA_APRIL_2010_NEWSLETTER.pdf" target="_blank">April</a></li>
+				<li><a href="newsletters/ASA_MARCH_2010_NEWSLETTER.pdf" target="_blank">March</a></li>
+				<li><a href="newsletters/ASA_FEBRUARY_2010_NEWSLETTER.pdf" target="_blank">February</a></li>
+				<li><a href="newsletters/ASA_JANUARY_2010_NEWSLETTER.pdf" target="_blank">January</a></li>
+			</ul>
+		</div>
+		<div id = "pageright">
+		</div>
+	</div>
+	
+	<div id = "page 10">
+		<div id = "content">
+			<h2>History</h2>
+			<p>ASA was founded in 1990. We have a long history of traditions inclduing booth, Culture Night performances, CMU's Got Talent, OLDP, ski trips, semi-formals and many more.</p>
+			<div id = "albumlistwrapper">
+				<div id = "albumlist">
+					<div id = "album">
+						<a class="grouped_elements" rel="board11" title="ASA Board 2011" href="images/history/pastboards/board11.jpg"><img class="albumthumb" src="images/history/pastboards/board11.jpg" alt=""/></a>
+						<a class="grouped_elements" rel="board11" title="Ina Joo - President" href="images/history/pastboards/board11/board_ina.jpg">
+						<a class="grouped_elements" rel="board11" title="Donald Huh - Vice President" href="images/history/pastboards/board11/board_donald.jpg"></a>
+						<a class="grouped_elements" rel="board11" title="Helen Joung - Secretary" href="images/history/pastboards/board11/board_helen.jpg"></a>
+						<a class="grouped_elements" rel="board11" title="Christina Yoon - Public Releations Head" href="images/history/pastboards/board11/board_christina.jpg"></a>
+						<a class="grouped_elements" rel="board11" title="Jeff Lau - Public Releations Head" href="images/history/pastboards/board11/board_jeff.jpg"></a>
+						<a class="grouped_elements" rel="board11" title="Deanna Zhu - Culture Chair" href="images/history/pastboards/board11/board_deanna.jpg"></a>
+						<a class="grouped_elements" rel="board11" title="Justina Eng - Design Chair" href="images/history/pastboards/board11/board_justina.jpg"></a>
+						<a class="grouped_elements" rel="board11" title="Stephanie Yeung - Design Chair" href="images/history/pastboards/board11/board_steph.jpg"></a>
+						<a class="grouped_elements" rel="board11" title="JongHyun Thom - Intramural Sports Chair" href="images/history/pastboards/board11/board_jonghyun.jpg"></a>
+						<a class="grouped_elements" rel="board11" title="Jae Eun Kim - Newsletter Chair" href="images/history/pastboards/board11/board_jaeeun.jpg"></a>
+						<a class="grouped_elements" rel="board11" title="Stephanie Park - Newsletter Chair" href="images/history/pastboards/board11/board_.jpg"></a>
+						<a class="grouped_elements" rel="board11" title="Patrick Jang - Service Chair" href="images/history/pastboards/board11/board_pat.jpg"></a>
+						<a class="grouped_elements" rel="board11" title="Al Wang - Webmaster" href="images/history/pastboards/board11/board_al.jpg"></a>	
+						<a class="grouped_elements" rel="board11" title="Linda Zhang - Freshman Representative" href="images/history/pastboards/board11/board_linda.jpg"></a>	
+						<a class="grouped_elements" rel="board11" title="Mike Chiu - Freshman Representative" href="images/history/pastboards/board11/board_mike.jpg"></a>	
+						<br><center>Board 2011</center>
+					</div>
+		
+					<div id = "album">
+						<a class="grouped_elements" rel="board10" title="ASA Board 2010" href="images/history/pastboards/board10.jpg"><img class="albumthumb" src="images/history/pastboards/board10.jpg" alt=""/></a>			
+						<a class="grouped_elements" rel="board10" title="Minju Kim - President" href="images/history/pastboards/board10/board_minju.jpg">
+						<a class="grouped_elements" rel="board10" title="Amy Tsien - Vice President" href="images/history/pastboards/board10/board_amy.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Chris Jo - Secretary" href="images/history/pastboards/board10/board_chris.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Ina Joo - Treasurer" href="images/history/pastboards/board10/board_ina.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Ann Lee - Public Relations Head" href="images/history/pastboards/board10/board_ann.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Bob Kim - Public Relations Head" href="images/history/pastboards/board10/board_bob.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Karen Liu - Culture Chair" href="images/history/pastboards/board10/board_karen.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Donald Chow - Graphics Chair" href="images/history/pastboards/board10/board_donaldc.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Donald Huh - Graphics Chair" href="images/history/pastboards/board10/board_donaldh.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Willie Zhang - Intramural Sports Chair" href="images/history/pastboards/board10/board_willie.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Helen Joung - Newsletter Chair" href="images/history/pastboards/board10/board_helen.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Matt Ho - Newsletter Chair" href="images/history/pastboards/board10/board_matt.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Hannah Yang - Service Chair" href="images/history/pastboards/board10/board_hannah.jpg"></a>
+						<a class="grouped_elements" rel="board10" title="Tricia Chou - Webmaster" href="images/history/pastboards/board10/board_tricia.jpg"></a>
+						<br><center>Board 2010</center>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id = "pageleft">
+		</div>
+	</div>
+	
+	<div id = "page 11">
+		<div id = "content">
+			<div id = "history_albumlistwrapper">
+				<div id = "history_albumlist">
+					<div id = "album">
+						<a class="grouped_elements" rel="booths" title="ASA Booth 2012 - Looney Tunes" href="images/history/booths/booth12.jpg"><img class="albumthumb" src="images/history/booths/booth12.jpg" alt=""/></a>
+						<a class="grouped_elements" rel="booths" title="ASA Booth 2011 - Toy Story" href="images/history/booths/booth11.jpg"></a>
+						<a class="grouped_elements" rel="booths" title="ASA Booth 2010 - Marvel" href="images/history/booths/booth10.jpg"></a>
+						<a class="grouped_elements" rel="booths" title="ASA Booth 2009 - Pokebooth" href="images/history/booths/booth09.jpg"></a>
+						<br><center>Past Booths</center>
+					</div>
+					
+					<div id = "album">
+						<a class="grouped_elements" rel="CMUGT" title="Board @ CMU's Got Talent 2012" href="images/history/CMUGT/CMUGT_board12.jpg"><img class="albumthumb" src="images/history/CMUGT/CMUGT_board12.jpg" alt=""/></a>
+						<a class="grouped_elements" rel="CMUGT" title="Board @ CMU's Got Talent 2011" href="images/history/CMUGT/CMUGT_board11.jpg"></a>
+						<a class="grouped_elements" rel="CMUGT" title="Board @ CMU's Got Talent 2009" href="images/history/CMUGT/CMUGT_board09.jpg"></a>
+						<a class="grouped_elements" rel="CMUGT" title="2012 Flyer" href="images/history/flyers/CMUGT/CMUGT12.jpg"></a>
+						<a class="grouped_elements" rel="CMUGT" title="2011 Flyer" href="images/history/flyers/CMUGT/CMUGT11.jpg"></a>
+						<a class="grouped_elements" rel="CMUGT" title="2010 Flyer" href="images/history/flyers/CMUGT/CMUGT10.jpg"></a>
+						<a class="grouped_elements" rel="CMUGT" title="2009 Flyer" href="images/history/flyers/CMUGT/CMUGT09.jpg"></a>
+						<a class="grouped_elements" rel="CMUGT" title="2008 Flyer" href="images/history/flyers/CMUGT/CMUGT08.jpg"></a>
+						<br><center>CMU's Got Talent</center>
+					</div>
+					
+					<div id = "album">
+						<a class="grouped_elements" rel="CN" title="Culture Night 2011" href="images/history/culturenight/CN11.jpg"><img class="albumthumb" src="images/history/culturenight/CN11.jpg" alt=""/></a>
+						<a class="grouped_elements" rel="CN" title="ASA Dance 2011 @ Culture Night" href="images/history/culturenight/asadance11.jpg"></a>
+						<a class="grouped_elements" rel="CN" title="Culture Night 2010" href="images/history/culturenight/CN10.jpg"></a>
+						<a class="grouped_elements" rel="CN" title="ASA Dance 2010 @ Culture Night" href="images/history/culturenight/asadance10.jpg"></a>
+						<br><center>Culture Night</center>
+					</div>
+					
+					<div id = "album">
+						<a class="grouped_elements" rel="OBNBdinner" title="Old Board(2011)/New Board(2012)" href="images/history/OBNBdinner/OBNB11_12.jpg"><img class="albumthumb" src="images/history/OBNBdinner/OBNB11_12.jpg" alt=""/></a>
+						<a class="grouped_elements" rel="OBNBdinner" title="Old Board(2010)/New Board(2011)" href="images/history/OBNBdinner/OBNB10_11.jpg"></a>
+						<br><center>Old Board/New Board Dinner</center>
+					</div>
+					
+					<div id = "album">
+						<a class="grouped_elements" rel="OLDP" title="OLDP 2011 Flyer" href="images/history/flyers/OLDP/OLDP11.jpg"><img class="albumthumb" src="images/history/flyers/OLDP/OLDP11.jpg" alt=""/></a>
+						<a class="grouped_elements" rel="OLDP" title="2010 Flyer" href="images/history/flyers/OLDP/OLDP10.jpg"></a>
+						<a class="grouped_elements" rel="OLDP" title="2009 Flyer" href="images/history/flyers/OLDP/OLDP09.jpg"></a>
+						<br><center>OLDP</center>
+					</div>
+					
+					
+					
+				</div>
+			</div>
+		</div>
+		<div id = "pageright">
+		</div>
+	</div>
+	
+	<div id = "page 12">
+		<div id = "content">
+			<h2>Contact Us!</h2>
+			<p>
+				<ul>
+					<li><a href="https://www.facebook.com/groups/158835824146902/?bookmark_t=group" target="blank">Facebook Group</a></li>
+					<li><a href="https://secure.imodules.com/s/1410/giving/form.aspx?sid=1410&gid=1&pgid=382&cid=990" target="blank">Make a Donation</a></li>
+				</ul>
+			</p>
+			<p>Leave us a Message!</p>
+			<form method='post' action='mail.php'>
+			  Name: <input name='name' type='text' /><br />
+			  Email: <input name='email' type='text' /><br />
+			  Message:<br />
+			  <textarea name='message' rows='10' cols='40'>
+			  </textarea><br />
+			  <input type='submit' value='Send' />
+			</form>
+		</div>
+		<div id = "pageleft">
+		</div>
+	</div>
+	
+	<div id = "page 13">
+		<div id = "content">
+			
+		</div>
+		<div id = "pageright">
+		</div>
+	</div>
+	
+	<div id = "page 14">
+		<img class="coverback" src="images/layout/bookcoverback.png"></img>
+	</div>
+
+</div>
+
+<div id = "footer">
+	<center><font face="Arial">2012 Carnegie Mellon University Asian Students Association &middot; CMU-ASA.com &middot; <a href="https://www.facebook.com/groups/158835824146902/?bookmark_t=group" target="blank">Facebook</a> &middot; Last Updated 6/19/12</font></center>
+</div>
+
+</body>
+</html>
